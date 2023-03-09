@@ -1,6 +1,6 @@
-const body = document.querySelector("body");
+const producer_container = document.getElementById("producer_container");
 
-const cofferProducers = [
+const coffeeProducers = [
   {
     id: 1,
     name: "Chemex",
@@ -30,7 +30,7 @@ const cofferProducers = [
 ];
 
 function render() {
-  for (let producer of cofferProducers) {
+  for (let producer of coffeeProducers) {
     // console.log(producer);
 
     let h2 = document.createElement("h2");
@@ -42,8 +42,8 @@ function render() {
     button.addEventListener("click", (e) => {
       console.log(e.target.id);
     });
-    body.appendChild(h2);
-    body.appendChild(button);
+    producer_container.appendChild(h2);
+    producer_container.appendChild(button);
   }
 }
 
