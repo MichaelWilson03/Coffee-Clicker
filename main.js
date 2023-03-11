@@ -1,14 +1,16 @@
+//Setting Global Variables
+
 const producer_container = document.getElementById("producer_container");
 let coffee_cup = document.getElementById("coffee_cup");
 let totalCups = document.getElementById("coffee_counter");
 let count = 0;
 let cups = document.getElementById("cups");
+let coffeePerSecond = 0;
 
 const coffeeProducers = [
   {
     id: 1,
     name: "Basic Coffee Roast Machine",
-    isVisible: false,
     quantity: 0,
     rate: 1,
     cost: 10,
@@ -17,7 +19,6 @@ const coffeeProducers = [
   {
     id: 2,
     name: "French Press",
-    isVisible: false,
     quantity: 0,
     rate: 2,
     cost: 50,
@@ -26,20 +27,28 @@ const coffeeProducers = [
   {
     id: 3,
     name: "Mr. Coffee",
-    isVisible: false,
     quantity: 0,
     rate: 3,
     cost: 100,
   },
 ];
+
+//Pressing coffee image makes counter go up by 1 with each click
 coffee_cup.addEventListener("click", function () {
   count++;
   totalCups.textContent = count;
 });
+
+//Increments the coffee counter per second depending on which producer is bought
+function incrementCoffee() {
+  count += coffeePerSecond;
+  totalCups.textContent = count;
+}
+setInterval(incrementCoffee, 1000);
+
+//Adds producers to producer container column, adds "Buy" button, eventlistner to manipulate the DOM to change counter for when button is pressed (- cost from counter when producer is bought)
 function render() {
   for (let producer of coffeeProducers) {
-    // console.log(producer);
-
     let h2 = document.createElement("h2");
     h2.textContent = producer.name;
     let QTY = document.createElement("h3");
@@ -52,22 +61,20 @@ function render() {
     const button = document.createElement("button");
     button.textContent = "Buy";
     button.id = producer.id;
-    // button.addEventListener("click", (e) => {
-    //   console.log(e.target.id);
-    // });
+
     button.addEventListener("click", function () {
       let cost = producer.cost;
       let newCount = count - cost;
       if (count < cost) {
-        return "Not Enough";
+        window.alert("Not Enough");
       } else {
         totalCups.textContent = newCount;
+        count = newCount;
+        coffeePerSecond += producer.rate;
+        cups.textContent = coffeePerSecond;
       }
     });
-    button.addEventListener("click", function () {
-      let per = producer.rate;
-      let newRate = (per = cups);
-    });
+
     producer_container.appendChild(h2);
     producer_container.appendChild(QTY);
     producer_container.appendChild(rate);
@@ -77,5 +84,3 @@ function render() {
 }
 
 render();
-
-// console.log(totalCups.textContent);
